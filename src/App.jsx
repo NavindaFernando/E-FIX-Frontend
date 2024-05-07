@@ -11,6 +11,7 @@ import cardFourImg from "./assets/images/card_four_img.jpg";
 import HomeTitle from "./components/HomeTitle/HomeTitle";
 import Button from "./components/Button/Button";
 import Footer from "./components/Footer/Footer";
+import ServiceCard from "./components/ServiceCard/ServiceCard";
 
 function App() {
   return (
@@ -22,6 +23,8 @@ function App() {
           Health & Personal safety"
       />
 
+      <ServiceCard />
+
       <HomeTitle homeTitle="Top Products" />
 
       <div className="flex justify-center items-center gap-9 flex-wrap px-10">
@@ -32,10 +35,14 @@ function App() {
       </div>
 
       <div className="flex justify-center items-center py-10">
-        <Button btnName="View more" btnRounded="rounded-md" btnHidden="hidden max-sm:block"/>
+        <Button
+          btnName="View more"
+          btnRounded="rounded-md"
+          btnHidden="hidden max-sm:block"
+        />
       </div>
 
-      <Footer/>
+      <Footer />
     </BodyContent>
   );
 }
