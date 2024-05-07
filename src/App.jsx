@@ -10,6 +10,7 @@ import cardThreeImg from "./assets/images/card_three_img.jpg";
 import cardFourImg from "./assets/images/card_four_img.jpg";
 import HomeTitle from "./components/HomeTitle/HomeTitle";
 import Button from "./components/Button/Button";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   return (
@@ -33,6 +34,8 @@ function App() {
       <div className="flex justify-center items-center py-10">
         <Button btnName="View more" btnRounded="rounded-md" btnHidden="hidden max-sm:block"/>
       </div>
+
+      <Footer/>
     </BodyContent>
   );
 }
