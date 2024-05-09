@@ -2,6 +2,7 @@ import React from "react";
 import menu from "../../assets/images/menu.svg";
 import closeMenu from "../../assets/images/close-menu.svg";
 import "./Navbar.css";
+import { Link } from "react-router-dom";
 
 function Navbar() {
   return (
@@ -19,9 +20,11 @@ function Navbar() {
       </label>
 
       <nav class="navbar">
-        <a href="#">Home</a>
+        {/* <a href="#">Home</a> */}
+        <Link to={"/"}>Home</Link>
         <a href="#">Services</a>
-        <a href="#">Top Products</a>
+        {/* <a href="/products">Products</a> */}
+        <Link to={"/products"}>Products</Link>
         <a href="#">Testimonials</a>
         <a href="#">Contact us</a>
       </nav>
