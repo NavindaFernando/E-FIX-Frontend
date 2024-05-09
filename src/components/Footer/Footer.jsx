@@ -8,7 +8,7 @@ import { COMPANYINFO, HELPANDSUPPORT, CUSTOMERCARE, FINDUSON } from "./Menus";
 
 function Footer() {
   return (
-    <footer className="bg-white text-black">
+    <footer className="bg-white text-black w-[90%] m-auto">
       <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-6 sm:px-8 px-5 py-6">
         <Item Links={COMPANYINFO} title="COMPANY INFO" />
         <Item Links={HELPANDSUPPORT} title="HELP & SUPPORT" />
@@ -16,7 +16,7 @@ function Footer() {
         <Item Links={FINDUSON} title="FIND US ON" />
       </div>
 
-      <div className="md:flex md:justify-between md:items-center sm:px-12 px-4 bg-[#F4F6F8] py-7">
+      <div className="md:flex md:justify-between md:items-center rounded-md sm:px-12 px-4 bg-[#F4F6F8] py-7">
         <h1 className="rounded-md md:mb-0 font-bold mb-6 lg:leading-normal fw-bold md:w-2/5">
           Get the code and receive $1 for free.
         </h1>
@@ -38,15 +38,13 @@ function Footer() {
 
       <div className="grid gap-10 pt-7 text-[#9B9B9B] text-sm pb-4 px-5 grid-cols-[5fr_1fr] sm:px-8 max-md:grid-cols-[1fr]">
         <span>
-          Copyright @ 2023. All rights reserved by E-FIX. Developed by Me. Terms · Privacy Policy
+          Copyright @ 2024. All rights reserved by E-FIX. Developed by Me. Terms
+          · Privacy Policy
         </span>
         <div className="flex gap-6 items-center justify-start">
-          <img src={fbIcon} alt="" className="w-6" />
-          <img src={googleIcon} alt="" className="w-9" />
-          <img src={appleIcon} alt="" className="w-7" />
-          {/* <Icon iconSrc={fbIcon} iconBg="bg-white" />
-          <Icon iconSrc={googleIcon} iconBg="bg-white" />
-          <Icon iconSrc={appleIcon} iconBg="bg-white" /> */}
+          <img src={fbIcon} alt="" className="w-6 cursor-pointer" />
+          <img src={googleIcon} alt="" className="w-9 cursor-pointer" />
+          <img src={appleIcon} alt="" className="w-7 cursor-pointer" />
         </div>
       </div>
     </footer>
