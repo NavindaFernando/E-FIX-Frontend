@@ -20,13 +20,11 @@ function Navbar() {
       </label>
 
       <nav class="navbar">
-        {/* <a href="#">Home</a> */}
         <Link to={"/"}>Home</Link>
-        <a href="#">Services</a>
-        {/* <a href="/products">Products</a> */}
         <Link to={"/products"}>Products</Link>
-        <a href="#">Testimonials</a>
-        <a href="#">Contact us</a>
+        <Link to={"/services"}>Services</Link>
+        <Link to={"/cart"}>Cart</Link>
+        <Link to={"/contact"}>Contact us</Link>
       </nav>
     </header>
   );

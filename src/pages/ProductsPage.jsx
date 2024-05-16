@@ -6,6 +6,7 @@ import cardTwoImg from "../assets/images/card_two_img.jpg";
 import cardFourImg from "../assets/images/card_four_img.jpg";
 import Button from "../components/Button/Button";
 import Footer from "../components/Footer/Footer";
+import FilterItem from "../components/FilterItem/FilterItem";
 
 function ProductsPage() {
   return (
@@ -13,10 +14,10 @@ function ProductsPage() {
       <Navbar />
 
       <div className="mt-28 px-14 pb-7 flex gap-8 justify-center items-center flex-wrap max-sm:flex-col max-sm:gap-2 max-md:mt-24">
-        <div className="cursor-pointer text-black hover:bg-[#f4f4f494] hover:text-black rounded-lg p-2">Cosmetics</div>
-        <div className="cursor-pointer text-black hover:bg-[#f4f4f494] hover:text-black rounded-lg p-2">Bags</div>
-        <div className="cursor-pointer text-black hover:bg-[#f4f4f494] hover:text-black rounded-lg p-2">Watch</div>
-        <div className="cursor-pointer text-black hover:bg-[#f4f4f494] hover:text-black rounded-lg p-2">Cloths</div>
+        <FilterItem filterBy="Cosmetics" />
+        <FilterItem filterBy="Bags" />
+        <FilterItem filterBy="Watch" />
+        <FilterItem filterBy="Cloths" />
       </div>
 
       <div className="flex justify-center items-center gap-9 flex-wrap px-10">
@@ -35,13 +36,10 @@ function ProductsPage() {
       </div>
 
       <div className="flex justify-center items-center py-10">
-        <Button
-          btnName="View more"
-          btnRounded="rounded-md"
-        />
+        <Button btnName="View more" btnRounded="rounded-md" />
       </div>
 
-      <Footer/>
+      <Footer />
     </>
   );
 }

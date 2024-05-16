@@ -12,9 +12,9 @@
 }
 
 ::-webkit-scrollbar {
-  display: none;
-  /* width: 0.5em;
-  height: 0.5em; */
+  /* display: none; */
+  width: 0.5em;
+  height: 0.5em;
 }
 
 ::-webkit-scrollbar-track {
