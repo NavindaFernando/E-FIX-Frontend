@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 function Navbar() {
   return (
-    <header class="header">
+    <header class="nav_header">
       {/* <img class="logo" src={logo} alt="" /> */}
       <input type="checkbox" id="check" />
       <label for="check" class="icons">
