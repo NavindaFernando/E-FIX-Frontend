@@ -1,17 +1,21 @@
 import React, { useEffect, useRef, useState } from "react";
 import webIcon from "../../assets/images/card_two_img.jpg";
 import "./admin.css";
+import MenuItem from "../../components/MenuItem/MenuItem";
 
 function AdminPage() {
-
-  const [activeMenu, setActiveMenu] = useState("Dashboard");
-
   const sideBarRef = useRef(null);
   const menuBarRef = useRef(null);
   const searchBtnRef = useRef(null);
   const searchFormRef = useRef(null);
   const searchBtnIconRef = useRef(null);
   const togglerRef = useRef(null);
+
+  const [activeMenu, setActiveMenu] = useState("Dashboard");
+
+  const handleMenuClick = (menuName) => {
+    setActiveMenu(menuName);
+  };
 
   const handleSidebarToggle = () => {
     if (sideBarRef.current) {
@@ -53,10 +57,6 @@ function AdminPage() {
     }
   };
 
-  const handleMenuClick = (menuName) => {
-    setActiveMenu(menuName);
-  };
-
   useEffect(() => {
     const updateVisitorCount = () => {
       let count = localStorage.getItem("visitorCount");
@@ -66,7 +66,8 @@ function AdminPage() {
         count = parseInt(count, 10) + 1;
         localStorage.setItem("visitorCount", count);
       }
-      document.getElementById("visitorCount").innerText = localStorage.getItem("visitorCount");
+      document.getElementById("visitorCount").innerText =
+        localStorage.getItem("visitorCount");
     };
 
     updateVisitorCount();
@@ -86,10 +87,14 @@ function AdminPage() {
       document.getElementById("txt_product_qty").style.display = "none";
       document.getElementById("txt_product_size").style.display = "none";
       document.getElementById("txt_product_main_image").style.display = "none";
-      document.getElementById("txt_product_sub_image_one").style.display = "none";
-      document.getElementById("txt_product_sub_image_two").style.display = "none";
-      document.getElementById("txt_product_sub_image_three").style.display = "none";
-      document.getElementById("txt_product_sub_image_four").style.display = "none";
+      document.getElementById("txt_product_sub_image_one").style.display =
+        "none";
+      document.getElementById("txt_product_sub_image_two").style.display =
+        "none";
+      document.getElementById("txt_product_sub_image_three").style.display =
+        "none";
+      document.getElementById("txt_product_sub_image_four").style.display =
+        "none";
 
       document.getElementById("add_product_topic").style.display = "none";
       document.getElementById("btn_update_product").style.display = "none";
@@ -104,7 +109,8 @@ function AdminPage() {
       document.getElementById("txt_service_id").style.display = "block";
       document.getElementById("txt_service_image").style.display = "block";
       document.getElementById("txt_service_topic").style.display = "block";
-      document.getElementById("txt_service_description").style.display = "block";
+      document.getElementById("txt_service_description").style.display =
+        "block";
       document.getElementById("service_topic").style.display = "block";
       document.getElementById("btn_update_service").style.display = "block";
       document.getElementById("btn_add_service").style.display = "block";
@@ -134,74 +140,101 @@ function AdminPage() {
       document.getElementById("txt_product_id").style.display = "block";
       document.getElementById("txt_product_name").style.display = "block";
       document.getElementById("txt_product_price").style.display = "block";
-      document.getElementById("txt_product_description").style.display = "block";
+      document.getElementById("txt_product_description").style.display =
+        "block";
       document.getElementById("txt_product_colors").style.display = "block";
       document.getElementById("txt_product_qty").style.display = "block";
       document.getElementById("txt_product_size").style.display = "block";
       document.getElementById("txt_product_main_image").style.display = "block";
-      document.getElementById("txt_product_sub_image_one").style.display = "block";
-      document.getElementById("txt_product_sub_image_two").style.display = "block";
-      document.getElementById("txt_product_sub_image_three").style.display = "block";
-      document.getElementById("txt_product_sub_image_four").style.display = "block";
+      document.getElementById("txt_product_sub_image_one").style.display =
+        "block";
+      document.getElementById("txt_product_sub_image_two").style.display =
+        "block";
+      document.getElementById("txt_product_sub_image_three").style.display =
+        "block";
+      document.getElementById("txt_product_sub_image_four").style.display =
+        "block";
 
       document.getElementById("add_product_topic").style.display = "block";
       document.getElementById("btn_update_product").style.display = "block";
       document.getElementById("btn_add_product").style.display = "block";
     };
 
-    document.getElementById("btn_service").addEventListener("click", handleServiceDisplay);
-    document.getElementById("btn_product").addEventListener("click", handleProductDisplay);
+    document
+      .getElementById("btn_service")
+      .addEventListener("click", handleServiceDisplay);
+    document
+      .getElementById("btn_product")
+      .addEventListener("click", handleProductDisplay);
 
     window.addEventListener("resize", handleResize);
 
     return () => {
       window.removeEventListener("resize", handleResize);
-      document.getElementById("btn_service").removeEventListener("click", handleServiceDisplay);
-      document.getElementById("btn_product").removeEventListener("click", handleProductDisplay);
+      document
+        .getElementById("btn_service")
+        .removeEventListener("click", handleServiceDisplay);
+      document
+        .getElementById("btn_product")
+        .removeEventListener("click", handleProductDisplay);
     };
   }, []);
 
   return (
     <body className="admin_body">
-
-      {/* <!-- sidebar --> */}
+      {/* sidebar */}
       <div className="sidebar" ref={sideBarRef}>
         <a href="#" className="logo">
           {" "}
         </a>
         <ul className="side-menu">
+          <MenuItem
+            activeMenu={activeMenu}
+            menuName="Dashboard"
+            handleMenuClick={handleMenuClick}
+            iconClass="bx bxs-dashboard"
+            label="Dashboard"
+          />
 
-          <li className={activeMenu === "Dashboard" ? "active" : ""} onClick={() => handleMenuClick("Dashboard")}>
-            <a href="#">
-              <i className="bx bxs-dashboard"></i>Dashboard
-            </a>
-          </li>
-          {/* <li className={activeMenu === "Shop" ? "active" : ""} onClick={() => handleMenuClick("Shop")}>
-            <a href="#">
-              <i className='bx bx-store-alt'></i>Products
-            </a>
-          </li>
-          <li className={activeMenu === "Analytics" ? "active" : ""} onClick={() => handleMenuClick("Analytics")}>
-            <a href="#">
-              <i className='bx bx-analyse'></i>Analytics
-            </a>
-          </li>
-          <li className={activeMenu === "Tickets" ? "active" : ""} onClick={() => handleMenuClick("Tickets")}>
-            <a href="#">
-              <i className='bx bx-message-square-dots'></i>Messages
-            </a>
-          </li>
-          <li className={activeMenu === "Users" ? "active" : ""} onClick={() => handleMenuClick("Users")}>
-            <a href="#">
-              <i className='bx bx-group'></i>Users
-            </a>
-          </li>
-          <li className={activeMenu === "Settings" ? "active" : ""} onClick={() => handleMenuClick("Settings")}>
-            <a href="#">
-              <i className='bx bx-cog'></i>Settings
-            </a>
-          </li> */}
+          <MenuItem
+            activeMenu={activeMenu}
+            menuName="Products"
+            handleMenuClick={handleMenuClick}
+            iconClass="bx bx-store-alt"
+            label="Products"
+          />
 
+          <MenuItem
+            activeMenu={activeMenu}
+            menuName="Analytics"
+            handleMenuClick={handleMenuClick}
+            iconClass="bx bx-analyse"
+            label="Analytics"
+          />
+
+          <MenuItem
+            activeMenu={activeMenu}
+            menuName="Tickets"
+            handleMenuClick={handleMenuClick}
+            iconClass="bx bx-message-square-dots"
+            label="Messages"
+          />
+
+          <MenuItem
+            activeMenu={activeMenu}
+            menuName="Users"
+            handleMenuClick={handleMenuClick}
+            iconClass="bx bx-group"
+            label="Users"
+          />
+
+          <MenuItem
+            activeMenu={activeMenu}
+            menuName="Settings"
+            handleMenuClick={handleMenuClick}
+            iconClass="bx bx-cog"
+            label="Settings"
+          />
         </ul>
         <ul className="side-menu">
           <li>
@@ -213,20 +246,38 @@ function AdminPage() {
         </ul>
       </div>
 
-      {/* <!-- main content --> */}
       <div className="content">
-        {/* <!-- navbar --> */}
+        {/* navbar */}
         <nav>
-          <i className="bx bx-menu" ref={menuBarRef} onClick={handleSidebarToggle}></i>
+          <i
+            className="bx bx-menu"
+            ref={menuBarRef}
+            onClick={handleSidebarToggle}
+          ></i>
           <form action="#">
             <div className="form-input" ref={searchFormRef}>
-              <input id="#txt_tbl_service_search" type="search" placeholder="Search..." />
-              <button className="search-btn" type="button" ref={searchBtnRef} onClick={handleSearchToggle}>
+              <input
+                id="#txt_tbl_service_search"
+                type="search"
+                placeholder="Search..."
+              />
+              <button
+                className="search-btn"
+                type="button"
+                ref={searchBtnRef}
+                onClick={handleSearchToggle}
+              >
                 <i className="bx bx-search" ref={searchBtnIconRef}></i>
               </button>
             </div>
           </form>
-          <input type="checkbox" id="theme-toggle" hidden ref={togglerRef} onChange={handleThemeToggle} />
+          <input
+            type="checkbox"
+            id="theme-toggle"
+            hidden
+            ref={togglerRef}
+            onChange={handleThemeToggle}
+          />
           <label htmlFor="theme-toggle" className="theme-toggle"></label>
           <a href="#" className="notif">
             <i className="bx bx-bell"></i>
@@ -237,8 +288,9 @@ function AdminPage() {
           </a>
         </nav>
 
+        {/* main content */}
         <main>
-          {/* <!-- header --> */}
+          {/* header */}
           <div className="header">
             <div className="left">
               <h1>Dashboard</h1>
@@ -255,7 +307,7 @@ function AdminPage() {
               </ul>
             </div>
 
-            {/* <!-- Choose Services or Products --> */}
+            {/* Choose Products or Services */}
             <a className="chooser">
               <i className="bx bx-reset"></i>
               <span id="btn_service">Services</span>
@@ -263,7 +315,7 @@ function AdminPage() {
             </a>
           </div>
 
-          {/* <!-- insights --> */}
+          {/* insights */}
           <ul className="insights">
             <li>
               <i className="bx bx-show-alt"></i>
@@ -272,6 +324,7 @@ function AdminPage() {
                 <p>Site Visit</p>
               </span>
             </li>
+
             <li>
               <i className="bx bx-line-chart"></i>
               <span className="info">
@@ -279,6 +332,7 @@ function AdminPage() {
                 <p>Searches</p>
               </span>
             </li>
+            
             <li>
               <i className="bx bx-calendar-check"></i>
               <span className="info">
@@ -303,10 +357,7 @@ function AdminPage() {
                 <i className="bx bx-receipt"></i>
                 {/* <!-- products crud --> */}
                 <h3 id="product_topic">Products</h3>
-                <i
-                  id="btn_get_all_product"
-                  className="bx bx-loader-circle"
-                ></i>
+                <i id="btn_get_all_product" className="bx bx-loader-circle"></i>
                 <i
                   id="btn_delete_product"
                   className="bx bx-message-rounded-minus"
@@ -315,7 +366,10 @@ function AdminPage() {
 
                 {/* <!-- services crud --> */}
                 <h3 id="services_topic">Services</h3>
-                <i id="btn_get_all_services" className="bx bx-loader-circle"></i>
+                <i
+                  id="btn_get_all_services"
+                  className="bx bx-loader-circle"
+                ></i>
                 <i id="btn_delete_services" className="bx bx-x"></i>
                 <i id="btn_search_services" className="bx bx-search"></i>
               </div>
@@ -345,7 +399,7 @@ function AdminPage() {
                     <td>Image</td>
                   </tr>
                   <tr>
-                  <td>P002</td>
+                    <td>P002</td>
                     <td>Hand Purse</td>
                     <td>12$</td>
                     <td>Lorem ipsum dolor sit amet...</td>
@@ -421,7 +475,6 @@ function AdminPage() {
                 <i id="btn_add_service" className="bx bx-plus"></i>
               </div>
               <ul className="input-list">
-
                 {/* <!-- product inputs --> */}
                 <input
                   id="txt_product_id"
@@ -521,4 +574,3 @@ function AdminPage() {
 }
 
 export default AdminPage;
-
