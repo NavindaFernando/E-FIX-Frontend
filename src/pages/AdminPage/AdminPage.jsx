@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import webIcon from "../../assets/images/card_two_img.jpg";
 import "./admin.css";
 import MenuItem from "../../components/MenuItem/MenuItem";
+import Insight from "../../components/Insight/Insight";
+
 
 function AdminPage() {
   const sideBarRef = useRef(null);
@@ -317,40 +319,13 @@ function AdminPage() {
 
           {/* insights */}
           <ul className="insights">
-            <li>
-              <i className="bx bx-show-alt"></i>
-              <span className="info">
-                <h3 id="visitorCount">3,944</h3>
-                <p>Site Visit</p>
-              </span>
-            </li>
-
-            <li>
-              <i className="bx bx-line-chart"></i>
-              <span className="info">
-                <h3 id="searchCount">8,721</h3>
-                <p>Searches</p>
-              </span>
-            </li>
-            
-            <li>
-              <i className="bx bx-calendar-check"></i>
-              <span className="info">
-                <h3 id="number_of_product">10</h3>
-                <p>Products</p>
-              </span>
-            </li>
-
-            <li>
-              <i className="bx bx-dollar-circle"></i>
-              <span className="info">
-                <h3 id="number_of_services">24</h3>
-                <p>Services</p>
-              </span>
-            </li>
+            <Insight iconClass="bx bx-show-alt" title="3,944" description="Site Visit" insightid="visitorCount"/>
+            <Insight iconClass="bx bx-line-chart" title="8,721" description="SearchCount" insightid="searchCount"/>
+            <Insight iconClass="bx bx-calendar-check" title="10" description="Products" insightid="number_of_product"/>
+            <Insight iconClass="bx bx-dollar-circle" title="24" description="Site Visit" insightid="number_of_services"/>
           </ul>
 
-          {/* <!-- tables & inputs section --> */}
+          {/* tables & inputs section */}
           <div className="bottom-data">
             <div className="tables">
               <div className="header">
