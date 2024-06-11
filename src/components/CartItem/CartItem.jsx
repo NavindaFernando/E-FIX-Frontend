@@ -28,7 +28,7 @@ function CartItem() {
       </p>
 
       <div className="flex flex-row justify-end gap-5 mr-10 m-auto w-fit max-md:mr-0 max-sm:flex-col max-sm:gap-2">
-        <div className="text-black border-black border w-[50px] h-[50px] duration-300 text-sm rounded-full flex justify-center items-center cursor-pointer hover:bg-[#E3A572] hover:border-[#E3A572] hover:text-white max-md:w-[40px] max-md:h-[40px] max-sm:w-[30px] max-sm:h-[30px] max-sm:text-xs">
+        <div className="text-black border-[#a0a0a0] border w-[50px] h-[50px] duration-300 text-sm rounded-full flex justify-center items-center cursor-pointer hover:bg-[#E3A572] hover:border-[#E3A572] hover:text-white max-md:w-[40px] max-md:h-[40px] max-sm:w-[30px] max-sm:h-[30px] max-sm:text-xs">
           -
         </div>
         <div className="text-black text-sm rounded-full flex justify-center items-center max-sm:text-xs">

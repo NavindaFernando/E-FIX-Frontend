@@ -1,0 +1,113 @@
+.contact {
+  background: url(../../assets/images/contact_bg.png);
+  background-size: cover;
+  object-fit: cover;
+}
+
+.contactForm {
+  width: 40%;
+  padding: 40px;
+  background: #ffffff81;
+}
+
+.contactForm h2 {
+  font-size: 25px;
+  color: #333;
+  font-weight: 500;
+}
+
+.contactForm .inputBox {
+  position: relative;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.contactForm .inputBox input,
+.contactForm .inputBox textarea {
+  width: 100%;
+  padding: 5px 0;
+  font-size: 16px;
+  margin: 10px 0;
+  border: none;
+  border-bottom: 2px solid #333;
+  outline: none;
+  resize: none;
+  background-color: transparent;
+}
+
+.contactForm .inputBox span {
+  position: absolute;
+  left: 0;
+  padding: 5px 0;
+  font-size: 14px;
+  margin: 10px 0;
+  pointer-events: none;
+  transition: 0.5s;
+  color: #000000;
+}
+
+.contactForm .inputBox input:focus ~ span,
+.contactForm .inputBox input:valid ~ span,
+.contactForm .inputBox textarea:focus ~ span,
+.contactForm .inputBox textarea:valid ~ span {
+  color: #22675c;
+  font-size: 12px;
+  transform: translateY(-20px);
+}
+
+.contactForm .inputBox input[type="submit"] {
+  width: 100px;
+  background: #353535;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  font-size: 15px;
+  animation: move_right 1s infinite ease alternate;
+}
+
+#btnSendMail {
+  width: 100px;
+  background-color: #1b1b19;
+  color: white;
+  font-weight: bold;
+  height: 42px;
+  font-size: 15px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+  outline: none;
+  animation: move_right 1s infinite ease alternate;
+}
+
+/* Contact Breakpoint*/
+@media screen and (max-width: 618px) {
+  .contact {
+    bottom: 211px;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .contact {
+    padding: 50px;
+  }
+  .containers {
+    flex-direction: column;
+  }
+  .containers .contactInfo {
+    margin-bottom: 40px;
+  }
+  .containers .contactInfo,
+  .contactForm {
+    width: 100%;
+  }
+}
+
+/* Keyframes */
+@keyframes move_right {
+  from {
+    transform: translateX(-5px);
+  }
+  to {
+    transform: translateX(5px);
+  }
+}

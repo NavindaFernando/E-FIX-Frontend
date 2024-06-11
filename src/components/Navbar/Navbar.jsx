@@ -24,7 +24,7 @@ function Navbar() {
         <Link to={"/products"}>Products</Link>
         <Link to={"/services"}>Services</Link>
         <Link to={"/cart"}>Cart</Link>
-        <Link to={"/contact"}>Contact us</Link>
+        <Link to={"/contacts"}>Contact us</Link>
       </nav>
     </header>
   );

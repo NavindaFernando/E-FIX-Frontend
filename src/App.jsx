@@ -1,4 +1,3 @@
-import "./App.css";
 import homebg from "./assets/images/home_bg.png";
 import BodyContent from "./components/BodyContent/BodyContent";
 import Slider from "./components/Slider/Slider";

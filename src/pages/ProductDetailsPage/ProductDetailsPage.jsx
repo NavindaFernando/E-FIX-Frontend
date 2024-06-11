@@ -1,10 +1,10 @@
 import React from "react";
-import Navbar from "../components/Navbar/Navbar";
-import cardOneImg from "../assets/images/card_one_img.jpg";
-import cardTwoImg from "../assets/images/card_two_img.jpg";
-import cardThreeImg from "../assets/images/card_three_img.jpg";
-import cardFourImg from "../assets/images/card_four_img.jpg";
-import Footer from "../components/Footer/Footer";
+import Navbar from "../../components/Navbar/Navbar";
+import cardOneImg from "../../assets/images/card_one_img.jpg";
+import cardTwoImg from "../../assets/images/card_two_img.jpg";
+import cardThreeImg from "../../assets/images/card_three_img.jpg";
+import cardFourImg from "../../assets/images/card_four_img.jpg";
+import Footer from "../../components/Footer/Footer";
 
 function ProductDetailsPage() {
   return (

@@ -1,12 +1,12 @@
 import React from "react";
-import Navbar from "../components/Navbar/Navbar";
-import ImageCard from "../components/ImageCard/ImageCard";
-import cardOneImg from "../assets/images/card_one_img.jpg";
-import cardTwoImg from "../assets/images/card_two_img.jpg";
-import cardFourImg from "../assets/images/card_four_img.jpg";
-import Button from "../components/Button/Button";
-import Footer from "../components/Footer/Footer";
-import FilterItem from "../components/FilterItem/FilterItem";
+import Navbar from "../../components/Navbar/Navbar";
+import ImageCard from "../../components/ImageCard/ImageCard";
+import cardOneImg from "../../assets/images/card_one_img.jpg";
+import cardTwoImg from "../../assets/images/card_two_img.jpg";
+import cardFourImg from "../../assets/images/card_four_img.jpg";
+import Button from "../../components/Button/Button";
+import Footer from "../../components/Footer/Footer";
+import FilterItem from "../../components/FilterItem/FilterItem";
 
 function ProductsPage() {
   return (

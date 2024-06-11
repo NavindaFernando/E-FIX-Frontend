@@ -3,17 +3,170 @@ import webIcon from "../../assets/images/card_two_img.jpg";
 import "./admin.css";
 import MenuItem from "../../components/MenuItem/MenuItem";
 import Insight from "../../components/Insight/Insight";
-
+import SendIcon from "@mui/icons-material/Send";
+import Axios from "axios";
+import {Button,Paper,Table,TableBody,TableCell,TableContainer,TableHead,TableRow,TextField,Stack,} from "@mui/material";
 
 function AdminPage() {
+  // --------------- start api integration ---------------
+
+  const [productId, setProductId] = useState(0);
+  const [productName, setProductName] = useState("");
+  const [productPrice, setProductPrice] = useState("");
+  const [productDescription, setProductDescription] = useState("");
+  const [productColor, setProductColor] = useState("");
+  const [productQty, setProductQty] = useState("");
+  const [productSize, setProductSize] = useState("");
+  const [productImage, setProductMainImage] = useState("");
+  const [productSubImageOne, setProductSubImageOne] = useState("");
+  const [productSubImageTwo, setProductSubImageTwo] = useState("");
+  const [productSubImageThree, setProductSubImageThree] = useState("");
+  const [productSubImageFour, setProductSubImageFour] = useState("");
+
+  const [products, setProducts] = useState([0]);
+  const [productSubmitted, setProductSubmitted] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+
+  // load all products
+  useEffect(() => {
+    getProducts();
+  }, []);
+
+  // get products
+  const getProducts = () => {
+    Axios.get("http://localhost:3001/api/products")
+      .then((response) => {
+        setProducts(response.data.response || []);
+      })
+      .catch((error) => {
+        console.error("Axios Error : ", error);
+      });
+  };
+
+  // create products
+  const addProduct = (data) => {
+    setProductSubmitted(true);
+
+    const payload = {
+      productId: data.productId,
+      productName: data.productName,
+      productPrice: data.productPrice,
+      productDescription: data.productDescription,
+      productColor: data.productColor,
+      productQty: data.productQty,
+      productSize: data.productSize,
+      productImage: data.productImage,
+    };
+
+    Axios.post("http://localhost:3001/api/createproduct", payload)
+      .then(() => {
+        getProducts();
+        setProductSubmitted(false);
+        isEdit(false);
+      })
+      .catch((error) => {
+        console.error("Axios Error : ", error);
+      });
+  };
+
+  // clear form
+  useEffect(() => {
+    if (!productSubmitted) {
+      setProductId(0);
+      setProductName("");
+      setProductPrice("");
+      setProductDescription("");
+      setProductColor("");
+      setProductQty("");
+      setProductSize("");
+      setProductMainImage("");
+    }
+  }, [productSubmitted]);
+
+  // delete products
+  const deleteProduct = (data) => {
+    Axios.post("http://localhost:3001/api/deleteproduct", data)
+      .then(() => {
+        getProducts();
+      })
+      .catch((error) => {
+        console.error("Axios Error : ", error);
+      });
+  };
+
+  // selected row to the form
+  const populateForm = (product) => {
+    setIsEdit(true);
+    setProductId(product.productId);
+    setProductName(product.productName);
+    setProductPrice(product.productPrice);
+    setProductDescription(product.productDescription);
+    setProductColor(product.productColor);
+    setProductQty(product.productQty);
+    setProductSize(product.productSize);
+    setProductImage(product.productImage);
+    setProductSubImageOne(product.productSubImageOne);
+    setProductSubImageTwo(product.productSubImageTwo);
+    setProductSubImageThree(product.productSubImageThree);
+    setProductSubImageFour(product.productSubImageFour);
+  };
+
+  // updated product
+  const updateProduct = (data) => {
+    const payload = {
+      productId: data.productId,
+      productName: data.productName,
+      productPrice: data.productPrice,
+      productDescription: data.productDescription,
+      productColor: data.productColor,
+      productQty: data.productQty,
+      productSize: data.productSize,
+      productImage: data.productImage,
+      productSubImageOne: data.productSubImageOne,
+      productSubImageTwo: data.productSubImageTwo,
+      productSubImageThree: data.productSubImageThree,
+      productSubImageFour: data.productSubImageFour,
+    };
+
+    Axios.post("http://localhost:3001/api/updateproduct", payload)
+      .then(() => {
+        getProducts();
+        setProductSubmitted(false);
+        setIsEdit(false);
+        clearForm();
+      })
+      .catch((error) => {
+        console.error("Axios Error : ", error);
+      });
+  };
+
+  // clear form data
+  const clearForm = () => {
+    setProductId(0);
+    setProductName("");
+    setProductPrice("");
+    setProductDescription("");
+    setProductColor("");
+    setProductQty("");
+    setProductSize("");
+    setProductImage("");
+    setProductSubImageOne("");
+    setProductSubImageTwo("");
+    setProductSubImageThree("");
+    setProductSubImageFour("");
+  };
+
+  // --------------- end api integration ---------------
+
+  // --------------- start admin ui handling ---------------
+  const [activeMenu, setActiveMenu] = useState("Dashboard");
+
   const sideBarRef = useRef(null);
   const menuBarRef = useRef(null);
   const searchBtnRef = useRef(null);
   const searchFormRef = useRef(null);
   const searchBtnIconRef = useRef(null);
   const togglerRef = useRef(null);
-
-  const [activeMenu, setActiveMenu] = useState("Dashboard");
 
   const handleMenuClick = (menuName) => {
     setActiveMenu(menuName);
@@ -22,20 +175,6 @@ function AdminPage() {
   const handleSidebarToggle = () => {
     if (sideBarRef.current) {
       sideBarRef.current.classList.toggle("close");
-    }
-  };
-
-  const handleSearchToggle = (e) => {
-    if (window.innerWidth < 576) {
-      e.preventDefault();
-      if (searchFormRef.current) {
-        searchFormRef.current.classList.toggle("show");
-        if (searchFormRef.current.classList.contains("show")) {
-          searchBtnIconRef.current.classList.replace("bx-search", "bx-x");
-        } else {
-          searchBtnIconRef.current.classList.replace("bx-x", "bx-search");
-        }
-      }
     }
   };
 
@@ -74,116 +213,13 @@ function AdminPage() {
 
     updateVisitorCount();
 
-    const handleServiceDisplay = () => {
-      document.getElementById("product_topic").style.display = "none";
-      document.getElementById("btn_get_all_product").style.display = "none";
-      document.getElementById("btn_delete_product").style.display = "none";
-      document.getElementById("btn_search_product").style.display = "none";
-      document.getElementById("btn_service").style.display = "none";
-      document.getElementById("product_table").style.display = "none";
-      document.getElementById("txt_product_id").style.display = "none";
-      document.getElementById("txt_product_name").style.display = "none";
-      document.getElementById("txt_product_price").style.display = "none";
-      document.getElementById("txt_product_description").style.display = "none";
-      document.getElementById("txt_product_colors").style.display = "none";
-      document.getElementById("txt_product_qty").style.display = "none";
-      document.getElementById("txt_product_size").style.display = "none";
-      document.getElementById("txt_product_main_image").style.display = "none";
-      document.getElementById("txt_product_sub_image_one").style.display =
-        "none";
-      document.getElementById("txt_product_sub_image_two").style.display =
-        "none";
-      document.getElementById("txt_product_sub_image_three").style.display =
-        "none";
-      document.getElementById("txt_product_sub_image_four").style.display =
-        "none";
-
-      document.getElementById("add_product_topic").style.display = "none";
-      document.getElementById("btn_update_product").style.display = "none";
-      document.getElementById("btn_add_product").style.display = "none";
-
-      document.getElementById("services_topic").style.display = "block";
-      document.getElementById("btn_get_all_services").style.display = "block";
-      document.getElementById("btn_delete_services").style.display = "block";
-      document.getElementById("btn_search_services").style.display = "block";
-      document.getElementById("btn_product").style.display = "block";
-      document.getElementById("service_table").style.display = "block";
-      document.getElementById("txt_service_id").style.display = "block";
-      document.getElementById("txt_service_image").style.display = "block";
-      document.getElementById("txt_service_topic").style.display = "block";
-      document.getElementById("txt_service_description").style.display =
-        "block";
-      document.getElementById("service_topic").style.display = "block";
-      document.getElementById("btn_update_service").style.display = "block";
-      document.getElementById("btn_add_service").style.display = "block";
-    };
-
-    const handleProductDisplay = () => {
-      document.getElementById("services_topic").style.display = "none";
-      document.getElementById("btn_get_all_services").style.display = "none";
-      document.getElementById("btn_delete_services").style.display = "none";
-      document.getElementById("btn_search_services").style.display = "none";
-      document.getElementById("btn_product").style.display = "none";
-      document.getElementById("service_table").style.display = "none";
-      document.getElementById("txt_service_id").style.display = "none";
-      document.getElementById("txt_service_image").style.display = "none";
-      document.getElementById("txt_service_topic").style.display = "none";
-      document.getElementById("txt_service_description").style.display = "none";
-      document.getElementById("service_topic").style.display = "none";
-      document.getElementById("btn_update_service").style.display = "none";
-      document.getElementById("btn_add_service").style.display = "none";
-
-      document.getElementById("product_topic").style.display = "block";
-      document.getElementById("btn_get_all_product").style.display = "block";
-      document.getElementById("btn_delete_product").style.display = "block";
-      document.getElementById("btn_search_product").style.display = "block";
-      document.getElementById("btn_service").style.display = "block";
-      document.getElementById("product_table").style.display = "block";
-      document.getElementById("txt_product_id").style.display = "block";
-      document.getElementById("txt_product_name").style.display = "block";
-      document.getElementById("txt_product_price").style.display = "block";
-      document.getElementById("txt_product_description").style.display =
-        "block";
-      document.getElementById("txt_product_colors").style.display = "block";
-      document.getElementById("txt_product_qty").style.display = "block";
-      document.getElementById("txt_product_size").style.display = "block";
-      document.getElementById("txt_product_main_image").style.display = "block";
-      document.getElementById("txt_product_sub_image_one").style.display =
-        "block";
-      document.getElementById("txt_product_sub_image_two").style.display =
-        "block";
-      document.getElementById("txt_product_sub_image_three").style.display =
-        "block";
-      document.getElementById("txt_product_sub_image_four").style.display =
-        "block";
-
-      document.getElementById("add_product_topic").style.display = "block";
-      document.getElementById("btn_update_product").style.display = "block";
-      document.getElementById("btn_add_product").style.display = "block";
-    };
-
-    document
-      .getElementById("btn_service")
-      .addEventListener("click", handleServiceDisplay);
-    document
-      .getElementById("btn_product")
-      .addEventListener("click", handleProductDisplay);
-
     window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      document
-        .getElementById("btn_service")
-        .removeEventListener("click", handleServiceDisplay);
-      document
-        .getElementById("btn_product")
-        .removeEventListener("click", handleProductDisplay);
-    };
   }, []);
 
+  // --------------- end admin ui handling ---------------
+
   return (
-    <body className="admin_body">
+    <div className="admin_body">
       {/* sidebar */}
       <div className="sidebar" ref={sideBarRef}>
         <a href="#" className="logo">
@@ -267,7 +303,7 @@ function AdminPage() {
                 className="search-btn"
                 type="button"
                 ref={searchBtnRef}
-                onClick={handleSearchToggle}
+                onClick={() => {}}
               >
                 <i className="bx bx-search" ref={searchBtnIconRef}></i>
               </button>
@@ -309,20 +345,40 @@ function AdminPage() {
               </ul>
             </div>
 
-            {/* Choose Products or Services */}
+            {/* Genarate report */}
             <a className="chooser">
               <i className="bx bx-reset"></i>
-              <span id="btn_service">Services</span>
-              <span id="btn_product">Products</span>
+              {/* <span id="btn_service">Services</span> */}
+              <span className="cursor-pointer">Dowload PDF</span>
             </a>
           </div>
 
           {/* insights */}
           <ul className="insights">
-            <Insight iconClass="bx bx-show-alt" title="3,944" description="Site Visit" insightid="visitorCount"/>
-            <Insight iconClass="bx bx-line-chart" title="8,721" description="SearchCount" insightid="searchCount"/>
-            <Insight iconClass="bx bx-calendar-check" title="10" description="Products" insightid="number_of_product"/>
-            <Insight iconClass="bx bx-dollar-circle" title="24" description="Site Visit" insightid="number_of_services"/>
+            <Insight
+              iconClass="bx bx-show-alt"
+              title="3,944"
+              description="Site Visit"
+              insightid="visitorCount"
+            />
+            <Insight
+              iconClass="bx bx-line-chart"
+              title="8,721"
+              description="SearchCount"
+              insightid="searchCount"
+            />
+            <Insight
+              iconClass="bx bx-calendar-check"
+              title="10"
+              description="Products"
+              insightid="number_of_product"
+            />
+            <Insight
+              iconClass="bx bx-dollar-circle"
+              title="24"
+              description="UserCount"
+              insightid="number_of_services"
+            />
           </ul>
 
           {/* tables & inputs section */}
@@ -330,221 +386,388 @@ function AdminPage() {
             <div className="tables">
               <div className="header">
                 <i className="bx bx-receipt"></i>
-                {/* <!-- products crud --> */}
-                <h3 id="product_topic">Products</h3>
-                <i id="btn_get_all_product" className="bx bx-loader-circle"></i>
-                <i
-                  id="btn_delete_product"
-                  className="bx bx-message-rounded-minus"
-                ></i>
-                <i id="btn_search_product" className="bx bx-search"></i>
-
-                {/* <!-- services crud --> */}
-                <h3 id="services_topic">Services</h3>
-                <i
-                  id="btn_get_all_services"
-                  className="bx bx-loader-circle"
-                ></i>
-                <i id="btn_delete_services" className="bx bx-x"></i>
-                <i id="btn_search_services" className="bx bx-search"></i>
+                <h3 id="product_topic">Product Details</h3>
               </div>
-              {/* <!-- product table --> */}
-              <table id="product_table">
-                <thead>
-                  <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>Description</th>
-                    <th>Color</th>
-                    <th>QTY</th>
-                    <th>Size</th>
-                    <th>Image</th>
-                  </tr>
-                </thead>
-                <tbody id="tbl_product_body">
-                  <tr>
-                    <td>P001</td>
-                    <td>Hand bag</td>
-                    <td>13$</td>
-                    <td>Lorem ipsum dolor sit amet...</td>
-                    <td>red green</td>
-                    <td>50</td>
-                    <td>M XXL</td>
-                    <td>Image</td>
-                  </tr>
-                  <tr>
-                    <td>P002</td>
-                    <td>Hand Purse</td>
-                    <td>12$</td>
-                    <td>Lorem ipsum dolor sit amet...</td>
-                    <td>red green</td>
-                    <td>50</td>
-                    <td>M XXL</td>
-                    <td>Image</td>
-                  </tr>
-                  <tr>
-                    <td>P003</td>
-                    <td>Watch</td>
-                    <td>15$</td>
-                    <td>Lorem ipsum dolor sit amet...</td>
-                    <td>red green</td>
-                    <td>50</td>
-                    <td>M XXL</td>
-                    <td>Image</td>
-                  </tr>
-                </tbody>
-              </table>
 
-              {/* <!-- services table --> */}
-              <table id="service_table">
-                <thead>
-                  <tr>
-                    <th>Id</th>
-                    <th>Image</th>
-                    <th>Topic</th>
-                    <th>Description</th>
-                  </tr>
-                </thead>
-                <tbody id="tbl_service_body">
-                  <tr>
-                    <td>S001</td>
-                    <td>Image</td>
-                    <td>Service 01</td>
-                    <td>Amma care service, a dedicated NDIS service...</td>
-                  </tr>
-                  <tr>
-                    <td>S002</td>
-                    <td>Image</td>
-                    <td>Service 02</td>
-                    <td>Amma care service, a dedicated NDIS service...</td>
-                  </tr>
-                  <tr>
-                    <td>S003</td>
-                    <td>Image</td>
-                    <td>Service 03</td>
-                    <td>Amma care service, a dedicated NDIS service...</td>
-                  </tr>
-                </tbody>
-              </table>
+              {/* product table */}
+              {/* <TableContainer component={Paper}> */}
+              <TableContainer>
+                <Table id="product_table">
+                  <TableHead className="product_table_head">
+                    <TableRow>
+                      <TableCell
+                        sx={{
+                          textAlign: "center",
+                          fontWeight: "bold",
+                          color: "gray",
+                        }}
+                      >
+                        Id
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          textAlign: "center",
+                          fontWeight: "bold",
+                          color: "gray",
+                        }}
+                      >
+                        Name
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          textAlign: "center",
+                          fontWeight: "bold",
+                          color: "gray",
+                        }}
+                      >
+                        Price
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          textAlign: "center",
+                          fontWeight: "bold",
+                          color: "gray",
+                        }}
+                      >
+                        Description
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          textAlign: "center",
+                          fontWeight: "bold",
+                          color: "gray",
+                        }}
+                      >
+                        Color
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          textAlign: "center",
+                          fontWeight: "bold",
+                          color: "gray",
+                        }}
+                      >
+                        QTY
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          textAlign: "center",
+                          fontWeight: "bold",
+                          color: "gray",
+                        }}
+                      >
+                        Size
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          textAlign: "center",
+                          fontWeight: "bold",
+                          color: "gray",
+                        }}
+                      >
+                        Image
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          textAlign: "center",
+                          fontWeight: "bold",
+                          color: "gray",
+                        }}
+                      >
+                        Action
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          textAlign: "center",
+                          fontWeight: "bold",
+                          color: "gray",
+                        }}
+                      >
+                        Action
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody className="product_table_body">
+                    {products.length > 0 ? (
+                      products.map((product) => (
+                        <TableRow
+                          key={product.productId}
+                          sx={{
+                            "&:last-child td, &:last-child th": { border: 0 },
+                          }}
+                        >
+                          <TableCell
+                            component="th"
+                            scope="product"
+                            sx={{ color: "#ff5252" }}
+                          >
+                            {product.productId}
+                          </TableCell>
+                          <TableCell
+                            component="th"
+                            scope="product"
+                            sx={{ color: "#53545c" }}
+                          >
+                            {product.productName}
+                          </TableCell>
+                          <TableCell
+                            component="th"
+                            scope="product"
+                            sx={{ color: "green" }}
+                          >
+                            {product.productPrice}
+                          </TableCell>
+                          <TableCell
+                            component="th"
+                            scope="product"
+                            sx={{ color: "#53545c" }}
+                          >
+                            {product.productDescription}
+                          </TableCell>
+                          <TableCell
+                            component="th"
+                            scope="product"
+                            sx={{ color: "#53545c" }}
+                          >
+                            {product.productColor}
+                          </TableCell>
+                          <TableCell
+                            component="th"
+                            scope="product"
+                            sx={{ color: "#007ac0" }}
+                          >
+                            {product.productQty}
+                          </TableCell>
+                          <TableCell
+                            component="th"
+                            scope="product"
+                            sx={{ color: "#53545c" }}
+                          >
+                            {product.productSize}
+                          </TableCell>
+                          <TableCell
+                            component="th"
+                            scope="product"
+                            sx={{ color: "#53545c" }}
+                          >
+                            {product.productImage}
+                          </TableCell>
+                          <TableCell>
+                            <Button
+                              sx={{ margin: "0px 10px" }}
+                              onClick={() => populateForm(product)}
+                            >
+                              Update
+                            </Button>
+                          </TableCell>
+                          <TableCell>
+                            <Button
+                              sx={{ margin: "0px 10px", color: "#ff5252" }}
+                              onClick={() =>
+                                deleteProduct(
+                                  window.confirm("Are you sure?") &&
+                                    deleteProduct({
+                                      productId: product.productId,
+                                    })
+                                )
+                              }
+                            >
+                              Delete
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))
+                    ) : (
+                      <TableRow
+                        sx={{
+                          "&:last-child td, &:last-child th": { border: 0 },
+                        }}
+                      >
+                        <TableCell component="th" scope="product">
+                          No data
+                        </TableCell>
+                      </TableRow>
+                    )}
+                  </TableBody>
+                </Table>
+              </TableContainer>
             </div>
 
             {/* <!-- inputs section --> */}
             <div className="inputs">
               <div className="header">
                 <i className="bx bx-note"></i>
-                {/* <!-- product options --> */}
                 <h3 id="add_product_topic">Add Products</h3>
-                <i
-                  id="btn_update_product"
-                  className="bx bx-message-rounded-add"
-                ></i>
-                <i id="btn_add_product" className="bx bx-plus"></i>
-
-                {/* <!-- service options --> */}
-                <h3 id="service_topic">Add Services</h3>
-                <i
-                  id="btn_update_service"
-                  className="bx bx-message-rounded-add"
-                ></i>
-                <i id="btn_add_service" className="bx bx-plus"></i>
               </div>
               <ul className="input-list">
-                {/* <!-- product inputs --> */}
-                <input
-                  id="txt_product_id"
-                  type="text"
-                  placeholder="Product id"
-                />
-                <input
-                  id="txt_product_name"
-                  type="text"
-                  placeholder="Product name"
-                />
-                <input
-                  id="txt_product_price"
-                  type="text"
-                  placeholder="Product price"
-                />
-                <input
-                  id="txt_product_description"
-                  type="text"
-                  placeholder="Product description"
-                />
-                <input
-                  id="txt_product_colors"
-                  type="text"
-                  placeholder="Product colors"
-                />
-                <input
-                  id="txt_product_qty"
-                  type="text"
-                  placeholder="Product qty"
-                />
-                <input
-                  id="txt_product_size"
-                  type="text"
-                  placeholder="Product size"
-                />
-                <input
-                  id="txt_product_main_image"
-                  type="file"
-                  placeholder="Product main image"
-                  className="pt-2"
-                />
-                <input
-                  id="txt_product_sub_image_one"
-                  type="file"
-                  placeholder="Product sub image 01"
-                  className="pt-2"
-                />
-                <input
-                  id="txt_product_sub_image_two"
-                  type="file"
-                  placeholder="Product sub image 02"
-                  className="pt-2"
-                />
-                <input
-                  id="txt_product_sub_image_three"
-                  type="file"
-                  placeholder="Product sub image 03"
-                  className="pt-2"
-                />
-                <input
-                  id="txt_product_sub_image_four"
-                  type="file"
-                  placeholder="Product sub image 04"
-                  className="pt-2"
-                />
+                {/* <!-- product form --> */}
+                <Stack spacing={2}>
+                  <TextField
+                    type="number"
+                    id="txt_product_id"
+                    name="id"
+                    value={productId}
+                    onChange={(e) => setProductId(e.target.value)}
+                    label="Product id"
+                    variant="outlined"
+                    className="w-full"
+                  />
 
-                {/* <!-- service inputs --> */}
-                <input
-                  id="txt_service_id"
-                  type="text"
-                  placeholder="Service id"
-                />
-                <input
-                  id="txt_service_image"
-                  type="file"
-                  placeholder="Service id"
-                  className="pt-2 hidden"
-                />
-                <input
-                  id="txt_service_topic"
-                  type="text"
-                  placeholder="Service topic"
-                />
-                <input
-                  id="txt_service_description"
-                  type="text"
-                  placeholder="Service description"
-                />
+                  <TextField
+                    type="text"
+                    id="txt_product_name"
+                    name="id"
+                    value={productName}
+                    onChange={(e) => setProductName(e.target.value)}
+                    label="Product name"
+                    variant="outlined"
+                    sx={{ color: "#53545c" }}
+                    className="w-full"
+                  />
+
+                  <TextField
+                    type="text"
+                    id="txt_product_price"
+                    name="id"
+                    value={productPrice}
+                    onChange={(e) => setProductPrice(e.target.value)}
+                    label="Product price"
+                    variant="outlined"
+                    className="w-full"
+                  />
+
+                  <TextField
+                    type="text"
+                    id="txt_product_description"
+                    name="id"
+                    value={productDescription}
+                    onChange={(e) => setProductDescription(e.target.value)}
+                    label="Product description"
+                    variant="outlined"
+                    className="w-full"
+                  />
+
+                  <TextField
+                    type="text"
+                    id="txt_product_colors"
+                    name="id"
+                    value={productColor}
+                    onChange={(e) => setProductColor(e.target.value)}
+                    label="Product colors"
+                    variant="outlined"
+                    className="w-full"
+                  />
+
+                  <TextField
+                    type="text"
+                    id="txt_product_qty"
+                    name="id"
+                    value={productQty}
+                    onChange={(e) => setProductQty(e.target.value)}
+                    label="Product qty"
+                    variant="outlined"
+                    className="w-full"
+                  />
+
+                  <TextField
+                    type="text"
+                    id="txt_product_size"
+                    name="id"
+                    value={productSize}
+                    onChange={(e) => setProductSize(e.target.value)}
+                    label="Product size"
+                    variant="outlined"
+                    className="w-full"
+                  />
+
+                  <TextField
+                    type="file"
+                    id="txt_product_main_image"
+                    name="id"
+                    value={productImage}
+                    onChange={(e) => setProductMainImage(e.target.value)}
+                    variant="outlined"
+                    className="w-full"
+                  />
+
+                  <TextField
+                    type="file"
+                    id="txt_product_sub_image_one"
+                    name="id"
+                    value={productSubImageOne}
+                    onChange={(e) => setProductSubImageOne(e.target.value)}
+                    variant="outlined"
+                    className="w-full"
+                  />
+
+                  <TextField
+                    type="file"
+                    id="txt_product_sub_image_two"
+                    name="id"
+                    value={productSubImageTwo}
+                    onChange={(e) => setProductSubImageTwo(e.target.value)}
+                    variant="outlined"
+                    className="w-full"
+                  />
+
+                  <TextField
+                    type="file"
+                    id="txt_product_sub_image_three"
+                    name="id"
+                    value={productSubImageThree}
+                    onChange={(e) => setProductSubImageThree(e.target.value)}
+                    variant="outlined"
+                    className="w-full"
+                  />
+
+                  <TextField
+                    type="file"
+                    id="txt_product_sub_image_four"
+                    name="id"
+                    value={productSubImageFour}
+                    onChange={(e) => setProductSubImageFour(e.target.value)}
+                    variant="outlined"
+                    className="w-full"
+                  />
+
+                  {/* update form button */}
+                  <Button
+                    variant="contained"
+                    endIcon={<SendIcon />}
+                    className="h-[50px]"
+                    onClick={() =>
+                      isEdit
+                        ? updateProduct({
+                            productId,
+                            productName,
+                            productPrice,
+                            productDescription,
+                            productColor,
+                            productQty,
+                            productSize,
+                            productImage,
+                          })
+                        : addProduct({
+                            productId,
+                            productName,
+                            productPrice,
+                            productDescription,
+                            productColor,
+                            productQty,
+                            productSize,
+                            productImage,
+                          })
+                    }
+                  >
+                    {isEdit ? "Update Product" : "Add Product"}
+                  </Button>
+                </Stack>
               </ul>
             </div>
           </div>
         </main>
       </div>
-    </body>
+    </div>
   );
 }
 

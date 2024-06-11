@@ -1,12 +1,12 @@
 import React from "react";
-import Navbar from "../components/Navbar/Navbar";
-import CartItem from "../components/CartItem/CartItem";
-import payment_icons from "../assets/images/payment_icons.png";
-import ImageCard from "../components/ImageCard/ImageCard";
-import cardOneImg from "../assets/images/card_one_img.jpg";
-import cardTwoImg from "../assets/images/card_two_img.jpg";
-import cardFourImg from "../assets/images/card_four_img.jpg";
-import Footer from "../components/Footer/Footer";
+import Navbar from "../../components/Navbar/Navbar";
+import CartItem from "../../components/CartItem/CartItem";
+import payment_icons from "../../assets/images/payment_icons.png";
+import ImageCard from "../../components/ImageCard/ImageCard";
+import cardOneImg from "../../assets/images/card_one_img.jpg";
+import cardTwoImg from "../../assets/images/card_two_img.jpg";
+import cardFourImg from "../../assets/images/card_four_img.jpg";
+import Footer from "../../components/Footer/Footer";
 
 function CartPage() {
   return (
@@ -68,7 +68,7 @@ function CartPage() {
         <ImageCard cardImg={cardTwoImg} cardPrice="$319.00" />
       </div>
 
-      <Footer/>
+      <Footer />
     </>
   );
 }

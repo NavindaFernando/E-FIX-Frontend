@@ -465,13 +465,11 @@ body.dark {
 
 .content main .bottom-data .tables table {
   width: 100%;
-  /* width: 745px; */
-  /* text-align: center; */
+  text-align: center;
   border-collapse: collapse;
-  /* border: 1px solid red;  */
 }
 
-.content main .bottom-data .tables table th {
+.product_table_head {
   padding-bottom: 12px;
   font-size: 13px;
   border-bottom: 1px solid var(--grey);
@@ -490,20 +488,6 @@ body.dark {
 .content main .bottom-data .tables table tr td:nth-child(1) {
   color: var(--danger);
 }
-
-/* .content main .bottom-data .tables table tr td:first-child {
-  display: flex;
-  align-items: center;
-  grid-gap: 12px;
-  padding-left: 6px;
-} */
-
-/* .content main .bottom-data .tables table td img {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  object-fit: cover;
-} */
 
 .content main .bottom-data .tables table tbody tr {
   cursor: pointer;
@@ -592,38 +576,9 @@ body.dark {
 #txt_product_sub_image_one,
 #txt_product_sub_image_two,
 #txt_product_sub_image_three,
-#txt_product_sub_image_four,
-#txt_service_id,
-#txt_service_image,
-#txt_service_topic,
-#txt_service_description {
-  width: 100%;
-  height: 45px;
-  border: none;
-  background: var(--grey);
-  border-radius: 8px;
-  padding-left: 30px;
-  margin-bottom: 15px;
-}
-
-#services_topic,
-#btn_get_all_services,
-#btn_search_services,
-#btn_delete_services,
-#btn_product,
-#service_table,
-#txt_service_id,
-#txt_service_topic,
-#txt_service_description,
-#service_topic,
-#btn_update_service,
-#btn_add_service {
-  display: none;
-}
-
-#btn_product,
-#btn_service {
-  cursor: pointer;
+#txt_product_sub_image_four {
+  /* background: var(--grey); */
+  color: #53545c;
 }
 
 /*------------------ Breakpoints ------------------ */
