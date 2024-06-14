@@ -1,10 +1,50 @@
-import React from "react";
+import React, { useEffect } from "react";
+import emailjs from "emailjs-com";
 import BodyContent from "../../components/BodyContent/BodyContent";
 import Footer from "../../components/Footer/Footer";
 import Navbar from "../../components/Navbar/Navbar";
 import "./contact.css";
 
 function ContactPage() {
+  useEffect(() => {
+    // load the emailjs script
+    const script = document.createElement("script");
+    script.src =
+      "https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js";
+    script.onload = () => {
+      // initialize EmailJS after the script is loaded
+      emailjs.init("ZzOJO38ATTvXI3GwN");
+    };
+    document.body.appendChild(script);
+
+    // cleanup script on component unmount
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
+  const sendMail = (e) => {
+    e.preventDefault();
+
+    var params = {
+      name: e.target.name.value,
+      email: e.target.email.value,
+      message: e.target.message.value,
+    };
+
+    const serviceID = "service_crwknqs";
+    const templateID = "template_htqx0gl";
+
+    emailjs
+      .send(serviceID, templateID, params)
+      .then((res) => {
+        e.target.reset();
+        console.log(res);
+        alert("Your message sent successfully");
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <BodyContent>
       <Navbar />
@@ -19,12 +59,12 @@ function ContactPage() {
         </div>
 
         <div className="containers w-full flex justify-center items-center mt-[30px]">
-          <div class="contactInfo w-1/2 flex flex-col">
+          <div className="contactInfo w-1/2 flex flex-col">
             <div className="position-relative flex px-[0] py-[20px]">
               <div className="min-w-[60px] h-[60px] bg-[#ffffff81] flex justify-center items-center rounded-[50%] text-[22px] [box-shadow:0_0_1em_rgba(1,_17,_39,_0.5)]">
-                <i class="bx bx-current-location" aria-hidden="true"></i>
+                <i className="bx bx-current-location" aria-hidden="true"></i>
               </div>
-              <div class="flex ml-[20px] text-[16px] text-white flex-col font-light">
+              <div className="flex ml-[20px] text-[16px] text-white flex-col font-light">
                 <h3 className="font-medium text-white text-[1.70rem]">
                   Address
                 </h3>
@@ -38,7 +78,7 @@ function ContactPage() {
 
             <div className="position-relative flex px-[0] py-[20px]">
               <div className="min-w-[60px] h-[60px] bg-[#ffffff81] flex justify-center items-center rounded-[50%] text-[22px] [box-shadow:0_0_1em_rgba(1,_17,_39,_0.5)]">
-                <i class="bx bxs-phone" aria-hidden="true"></i>
+                <i className="bx bxs-phone" aria-hidden="true"></i>
               </div>
               <div className="flex ml-[20px] text-[16px] text-white flex-col font-light">
                 <h3 className="font-medium text-white text-[1.70rem]">Phone</h3>
@@ -47,8 +87,8 @@ function ContactPage() {
             </div>
 
             <div className="position-relative flex px-[0] py-[20px]">
-              <div class="min-w-[60px] h-[60px] bg-[#ffffff81] flex justify-center items-center rounded-[50%] text-[22px] [box-shadow:0_0_1em_rgba(1,_17,_39,_0.5)]">
-                <i class="bx bxs-envelope" aria-hidden="true"></i>
+              <div className="min-w-[60px] h-[60px] bg-[#ffffff81] flex justify-center items-center rounded-[50%] text-[22px] [box-shadow:0_0_1em_rgba(1,_17,_39,_0.5)]">
+                <i className="bx bxs-envelope" aria-hidden="true"></i>
               </div>
               <div className="flex ml-[20px] text-[16px] text-white flex-col font-light">
                 <h3 className="font-medium text-white text-[1.70rem]">Email</h3>
@@ -57,24 +97,33 @@ function ContactPage() {
             </div>
           </div>
 
-          {/* inputs */}
-          <div class="contactForm">
-            <form>
+          {/* Contact Form */}
+          <div className="contactForm w-1/2 flex flex-col">
+            <form onSubmit={sendMail}>
               <h2>Get in touch</h2>
-              <div class="inputBox">
-                <input id="name" type="text" required="required" />
+              <div className="inputBox">
+                <input id="name" name="name" type="text" required="required" />
                 <span>Full Name</span>
               </div>
-              <div class="inputBox">
-                <input id="email" type="text" required="required" />
+              <div className="inputBox">
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  required="required"
+                />
                 <span>Email</span>
               </div>
-              <div class="inputBox">
-                <textarea id="message" required="required"></textarea>
+              <div className="inputBox">
+                <textarea
+                  id="message"
+                  name="message"
+                  required="required"
+                ></textarea>
                 <span>Type Your Message...</span>
               </div>
-              <div class="inputBox">
-                <button id="btnSendMail" type="button" onclick="sendMail()">
+              <div className="inputBox">
+                <button id="btnSendMail" type="submit">
                   Send
                 </button>
               </div>

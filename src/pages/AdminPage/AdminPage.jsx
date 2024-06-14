@@ -56,6 +56,10 @@ function AdminPage() {
       productQty: data.productQty,
       productSize: data.productSize,
       productImage: data.productImage,
+      productSubImageOne: data.productSubImageOne,
+      productSubImageTwo: data.productSubImageTwo,
+      productSubImageThree: data.productSubImageThree,
+      productSubImageFour: data.productSubImageFour,
     };
 
     Axios.post("http://localhost:3001/api/createproduct", payload)
@@ -80,6 +84,10 @@ function AdminPage() {
       setProductQty("");
       setProductSize("");
       setProductMainImage("");
+      setProductSubImageOne("");
+      setProductSubImageTwo("");
+      setProductSubImageThree("");
+      setProductSubImageFour("");
     }
   }, [productSubmitted]);
 
@@ -465,7 +473,43 @@ function AdminPage() {
                           color: "gray",
                         }}
                       >
-                        Image
+                        MainImage
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          textAlign: "center",
+                          fontWeight: "bold",
+                          color: "gray",
+                        }}
+                      >
+                        SubImage1
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          textAlign: "center",
+                          fontWeight: "bold",
+                          color: "gray",
+                        }}
+                      >
+                        SubImage2
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          textAlign: "center",
+                          fontWeight: "bold",
+                          color: "gray",
+                        }}
+                      >
+                        SubImage3
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          textAlign: "center",
+                          fontWeight: "bold",
+                          color: "gray",
+                        }}
+                      >
+                        SubImage4
                       </TableCell>
                       <TableCell
                         sx={{
@@ -551,6 +595,34 @@ function AdminPage() {
                             sx={{ color: "#53545c" }}
                           >
                             {product.productImage}
+                          </TableCell>
+                          <TableCell
+                            component="th"
+                            scope="product"
+                            sx={{ color: "#53545c" }}
+                          >
+                            {product.productSubImageOne}
+                          </TableCell>
+                          <TableCell
+                            component="th"
+                            scope="product"
+                            sx={{ color: "#53545c" }}
+                          >
+                            {product.productSubImageTwo}
+                          </TableCell>
+                          <TableCell
+                            component="th"
+                            scope="product"
+                            sx={{ color: "#53545c" }}
+                          >
+                            {product.productSubImageThree}
+                          </TableCell>
+                          <TableCell
+                            component="th"
+                            scope="product"
+                            sx={{ color: "#53545c" }}
+                          >
+                            {product.productSubImageFour}
                           </TableCell>
                           <TableCell>
                             <Button
@@ -746,6 +818,10 @@ function AdminPage() {
                             productQty,
                             productSize,
                             productImage,
+                            productSubImageOne,
+                            productSubImageTwo,
+                            productSubImageThree,
+                            productSubImageFour,
                           })
                         : addProduct({
                             productId,
@@ -756,6 +832,10 @@ function AdminPage() {
                             productQty,
                             productSize,
                             productImage,
+                            productSubImageOne,
+                            productSubImageTwo,
+                            productSubImageThree,
+                            productSubImageFour,
                           })
                     }
                   >
