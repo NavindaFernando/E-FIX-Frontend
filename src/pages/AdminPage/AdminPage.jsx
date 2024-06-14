@@ -27,6 +27,8 @@ function AdminPage() {
   const [productSubmitted, setProductSubmitted] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
 
+  const endpoint = 'http://34.207.116.237:3021';
+
   // load all products
   useEffect(() => {
     getProducts();
@@ -34,7 +36,8 @@ function AdminPage() {
 
   // get products
   const getProducts = () => {
-    Axios.get("http://localhost:3001/api/products")
+    // Axios.get("http://localhost:3001'/api/products'")
+    Axios.get(endpoint + '/api/products')
       .then((response) => {
         setProducts(response.data.response || []);
       })
@@ -62,7 +65,7 @@ function AdminPage() {
       productSubImageFour: data.productSubImageFour,
     };
 
-    Axios.post("http://localhost:3001/api/createproduct", payload)
+    Axios.post(endpoint + '/api/createproduct', payload)
       .then(() => {
         getProducts();
         setProductSubmitted(false);
@@ -93,7 +96,7 @@ function AdminPage() {
 
   // delete products
   const deleteProduct = (data) => {
-    Axios.post("http://localhost:3001/api/deleteproduct", data)
+    Axios.post(endpoint + '/api/deleteproduct', data)
       .then(() => {
         getProducts();
       })
@@ -136,7 +139,7 @@ function AdminPage() {
       productSubImageFour: data.productSubImageFour,
     };
 
-    Axios.post("http://localhost:3001/api/updateproduct", payload)
+    Axios.post(endpoint + '/api/updateproduct', payload)
       .then(() => {
         getProducts();
         setProductSubmitted(false);
